@@ -92,7 +92,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="common\menu.cpp" />
-    <ClCompile Include="plugins\champion\karthus.cpp" />
+    <ClCompile Include="common\prediction.cpp" />
+    <ClCompile Include="libary\math\geometry.cpp" />
+    <ClCompile Include="plugins\champion\karthus\karthus.cpp" />
     <ClCompile Include="plugins\utility\bm_plugin.cpp" />
     <ClCompile Include="libary\global.cpp" />
     <ClCompile Include="main.cpp" />
@@ -103,7 +105,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\menu.hpp" />
-    <ClInclude Include="plugins\champion\karthus.hpp" />
+    <ClInclude Include="common\prediction.hpp" />
+    <ClInclude Include="libary\math\geometry.hpp" />
+    <ClInclude Include="plugins\champion\karthus\karthus.hpp" />
     <ClInclude Include="plugins\utility\bm_plugin.hpp" />
     <ClInclude Include="libary\global.hpp" />
     <ClInclude Include="libary\sdkapi.hpp" />

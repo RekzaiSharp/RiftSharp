@@ -1,5 +1,6 @@
 #include "menu.hpp"
 #include "orbwalker.hpp"
+#include "target_selector.hpp"
 
 SDKCOLOR color_red = { 0, 0, 255, 255 };
 SDKVECTOR direction_vector = { 0, 0, 1.f };
@@ -12,13 +13,14 @@ auto menu_t::save_settings() -> void
 	global->context()._SdkSetSettingBool("BM_MASTERY", menu->bm_mastery_emote);
 
 	//Orbwalker
-	global->context()._SdkSetSettingBool("BM_ENABLED", menu->ow_active);
-	global->context()._SdkSetSettingBool("BM_DRAWMYAUTO", menu->ow_auto_range);
-	global->context()._SdkSetSettingNumber("BM_KEYCOMBO", menu->ow_combo_key);
-	global->context()._SdkSetSettingNumber("BM_KEYHARASS", menu->ow_harass_key);
-	global->context()._SdkSetSettingNumber("BM_KEYLANECLEAR", menu->ow_lane_clear_key);
-	global->context()._SdkSetSettingNumber("BM_KEYLASTHIT", menu->ow_last_hit_key);
-	global->context()._SdkSetSettingNumber("BM_KEYJUNGLECLEAR", menu->ow_jungle_clear_key);
+	global->context()._SdkSetSettingBool("OW_ENABLED", menu->ow_active);
+	global->context()._SdkSetSettingBool("OW_DRAWMYAUTO", menu->ow_auto_range);
+	global->context()._SdkSetSettingNumber("OW_KEYCOMBO", menu->ow_combo_key);
+	global->context()._SdkSetSettingNumber("OW_KEYHARASS", menu->ow_harass_key);
+	global->context()._SdkSetSettingNumber("OW_KEYLANECLEAR", menu->ow_lane_clear_key);
+	global->context()._SdkSetSettingNumber("OW_KEYLASTHIT", menu->ow_last_hit_key);
+	global->context()._SdkSetSettingNumber("OW_KEYJUNGLECLEAR", menu->ow_jungle_clear_key);
+	global->context()._SdkSetSettingFloat("OW_KEYJUNGLECLEAR", menu->ow_extra_windup);
 }
 
 auto menu_t::load_settings() -> void
@@ -29,13 +31,14 @@ auto menu_t::load_settings() -> void
 	global->context()._SdkGetSettingBool("BM_MASTERY", &menu->bm_mastery_emote, false);
 
 	//Orbwalker
-	global->context()._SdkGetSettingBool("BM_ENABLED", &menu->ow_active, true);
-	global->context()._SdkGetSettingBool("BM_DRAWMYAUTO", &menu->ow_auto_range, true);
-	global->context()._SdkGetSettingNumber("BM_KEYCOMBO", &menu->ow_combo_key, 32);
-	global->context()._SdkGetSettingNumber("BM_KEYHARASS", &menu->ow_harass_key, 67);
-	global->context()._SdkGetSettingNumber("BM_KEYLANECLEAR", &menu->ow_lane_clear_key, 86);
-	global->context()._SdkGetSettingNumber("BM_KEYLASTHIT", &menu->ow_last_hit_key, 88);
-	global->context()._SdkGetSettingNumber("BM_KEYJUNGLECLEAR", &menu->ow_jungle_clear_key, 86);
+	global->context()._SdkGetSettingBool("OW_ENABLED", &menu->ow_active, true);
+	global->context()._SdkGetSettingBool("OW_DRAWMYAUTO", &menu->ow_auto_range, true);
+	global->context()._SdkGetSettingNumber("OW_KEYCOMBO", &menu->ow_combo_key, 32);
+	global->context()._SdkGetSettingNumber("OW_KEYHARASS", &menu->ow_harass_key, 67);
+	global->context()._SdkGetSettingNumber("OW_KEYLANECLEAR", &menu->ow_lane_clear_key, 86);
+	global->context()._SdkGetSettingNumber("OW_KEYLASTHIT", &menu->ow_last_hit_key, 88);
+	global->context()._SdkGetSettingNumber("OW_KEYJUNGLECLEAR", &menu->ow_jungle_clear_key, 86);
+	global->context()._SdkGetSettingFloat("OW_EXTRAWINDUP", &menu->ow_extra_windup, 40.f);
 }
 
 auto menu_t::draw_menu() -> void
@@ -81,6 +84,8 @@ auto menu_t::draw_menu() -> void
 			global->context()._SdkUiInputNumber("Last Hit", &menu->ow_last_hit_key, nullptr);
 			global->context()._SdkUiEndTree();
 		}
+
+		global->context()._SdkUiDragFloat("Extra Windup", &menu->ow_extra_windup, 0, 80, "%.0f", nullptr);
 	}
 	global->context()._SdkUiEndWindow();
 
@@ -94,8 +99,16 @@ auto menu_t::draw_overlay() -> void
 	{
 		if (menu->ow_auto_range)
 		{
-			global->context()._SdkDrawCircle((PSDKVECTOR)&object_manager->local_player.object_position, object_manager->local_player.attack_range, &color_red, 0, &direction_vector);
+			global->context()._SdkDrawCircle(PSDKVECTOR(&object_manager->local_player.object_position), object_manager->local_player.attack_range, &color_red, 0, &direction_vector);
 		}
+
+		if (target_selector->forced_active)
+		{
+			global->context()._SdkDrawCircle(PSDKVECTOR(&target_selector->forced_target.object_position), 100.f, &color_red, 0, &direction_vector);
+			global->context()._SdkDrawCircle(PSDKVECTOR(&target_selector->forced_target.object_position), 110.f, &color_red, 0, &direction_vector);
+			global->context()._SdkDrawCircle(PSDKVECTOR(&target_selector->forced_target.object_position), 120.f, &color_red, 0, &direction_vector);
+		}
+
 	}
 }
 

@@ -39,9 +39,12 @@ public:
 	bool IsZero() const;
 
 	float Length() const;
+	float Polar() const;
+	Vector& Rotated(float angle);
 	float LengthSqr() const;
 	float DistanceTo(const Vector& other) const;
 	float Dot(const Vector& other) const;
+	float AngleBetween(const Vector& other) const;
 
 	float NormalizeInPlace();
 	Vector& Normalize();

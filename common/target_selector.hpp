@@ -23,10 +23,11 @@ public:
 	};
 
 	object_manager_t::obj_ai_hero_t forced_target;
+	object_manager_t::obj_ai_hero_t main_target;
 	bool forced_active;
 
 	auto get_hero_target(target_mode_t mode, std::vector<object_manager_t::obj_ai_hero_t> hero_list) const->object_manager_t::obj_ai_hero_t;
-	auto force_target() const -> bool;
+	static auto force_target() -> void;
 
 };
 

@@ -22,26 +22,32 @@ auto target_selector_t::get_hero_target(target_mode_t mode, std::vector<object_m
 	return targets.front();
 }
 
-auto target_selector_t::force_target() const -> bool
+auto target_selector_t::force_target() -> void
 {
-	POINT p;
-	if (GetCursorPos(&p))
+	target_selector->forced_active = false;
+
+	global->context()._SdkEnumHeroes([](void* object, unsigned net_id, void*) -> bool
 	{
-		Vector coords;
-		global->context()._SdkScreenToWorld(PSDKPOINT(&p), PSDKVECTOR(&coords));
-		object_manager->local_player.object_position = coords;
-		auto targets = object_manager->get_ai_heroes(500.f, false);
-		if (targets.empty())
-		{
-			target_selector->forced_active = false;
-			return false;
-		}
-		std::sort(targets.begin(), targets.end(), [](const object_manager_t::obj_ai_hero_t& a, const object_manager_t::obj_ai_hero_t& b) { return a.object_distance < b.object_distance; });
-		target_selector->forced_target = targets.front();
+		auto is_target(false);
+		global->context()._SdkGetUnitIsMouseOver(object, &is_target);
+		if (!is_target)
+			return true;
+
+		auto team_id(0);
+		global->context()._SdkGetObjectTeamID(object, &team_id);
+		if (team_id == object_manager->local_player.team_id)
+			return true;
+
+		object_manager_t::obj_ai_hero_t target;
+		target.object = object;
+		target.net_id = net_id;
+		auto name = "";
+		global->context()._SdkGetAIName(object, &name);
+		target.object_name = name;
 		target_selector->forced_active = true;
+		target_selector->forced_target = target;
 		return true;
-	}
-	return false;
+	}, nullptr);
 }
 
 std::unique_ptr<target_selector_t> target_selector = std::make_unique<target_selector_t>();

@@ -68,7 +68,7 @@ auto bm_plugin_t::update_death_list() -> void
 			if (GetTickCount() > entry.death_tick + entry.death_time * 1000)
 			{
 				bm_plugin->death_list.erase(bm_plugin->death_list.begin() + i--);
-				global->context()._SdkConsoleWrite(std::string("Deathlist: " + entry.name + " removed.").c_str());
+				global->context()._SdkConsoleWrite(std::string("Deathlist: entry removed.").c_str());
 			}
 				
 

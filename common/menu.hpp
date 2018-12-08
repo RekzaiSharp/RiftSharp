@@ -19,6 +19,7 @@ public:
 	int ow_jungle_clear_key = 86;
 	int ow_harass_key = 67;
 	int ow_last_hit_key = 88;
+	float ow_extra_windup = 40.f;
 
 	static auto save_settings() -> void;
 	static auto load_settings() -> void;

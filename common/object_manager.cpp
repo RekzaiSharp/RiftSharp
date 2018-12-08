@@ -1,6 +1,7 @@
 #include "object_manager.hpp"
 #include "../libary/global.hpp"
 #include <string>
+#include "target_selector.hpp"
 
 auto object_manager_t::get_local_player() -> void
 {
@@ -32,11 +33,27 @@ auto object_manager_t::update_local_player(void* object, unsigned net_id, void*)
 	global->context()._SdkGetAIAttackDelay(object, &object_manager->local_player.attack_delay);
 	float temp_range(0);
 	global->context()._SdkGetAIAttackRange(object, &temp_range);
+	global->context()._SdkGetAIAttackSpeed(object, &object_manager->local_player.attack_speed);
 	global->context()._SdkGetObjectBoundingRadius(object, &object_manager->local_player.bounding_radius);
 	object_manager->local_player.attack_range = temp_range + object_manager->local_player.bounding_radius;
 	global->context()._SdkGetAIAttackDamage(object, &object_manager->local_player.attack_damage);
 	//object_manager->local_player.
 	return true;
+}
+
+auto object_manager_t::update_forced_target() -> void
+{
+	global->context()._SdkEnumHeroes([](void* object, unsigned net_id, void*) -> bool
+	{
+		if (object != target_selector->forced_target.object)
+			return true;
+
+		global->context()._SdkGetObjectBoundingRadius(object, &target_selector->forced_target.bounding_radius);
+		global->context()._SdkGetObjectPosition(object, PSDKVECTOR(&target_selector->forced_target.object_position));
+		global->context()._SdkGetAIMovementSpeed(object, &target_selector->forced_target.move_speed);
+
+		return true;
+	}, nullptr);
 }
 
 auto object_manager_t::get_ai_base(float range) -> std::vector<obj_ai_base_t>

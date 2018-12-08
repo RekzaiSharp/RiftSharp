@@ -9,7 +9,9 @@
     <ClCompile Include="common\target_selector.cpp" />
     <ClCompile Include="plugins\utility\bm_plugin.cpp" />
     <ClCompile Include="common\menu.cpp" />
-    <ClCompile Include="plugins\champion\karthus.cpp" />
+    <ClCompile Include="plugins\champion\karthus\karthus.cpp" />
+    <ClCompile Include="common\prediction.cpp" />
+    <ClCompile Include="libary\math\geometry.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libary\sdkapi.hpp" />
@@ -20,6 +22,8 @@
     <ClInclude Include="common\target_selector.hpp" />
     <ClInclude Include="plugins\utility\bm_plugin.hpp" />
     <ClInclude Include="common\menu.hpp" />
-    <ClInclude Include="plugins\champion\karthus.hpp" />
+    <ClInclude Include="plugins\champion\karthus\karthus.hpp" />
+    <ClInclude Include="common\prediction.hpp" />
+    <ClInclude Include="libary\math\geometry.hpp" />
   </ItemGroup>
 </Project>

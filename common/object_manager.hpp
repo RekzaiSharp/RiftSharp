@@ -22,6 +22,7 @@ public:
 		void* object;
 		unsigned net_id;
 		int ping;
+		float move_speed;
 		std::string object_name;
 		Vector object_position;
 		SDK_HEALTH object_health;
@@ -43,6 +44,7 @@ public:
 		unsigned ping;
 		int team_id;
 		std::string object_name;
+		float attack_speed;
 		Vector object_position;
 		SDK_HEALTH object_health;
 		bool is_casting;
@@ -85,9 +87,11 @@ public:
 
 	float temp_range = 0.f;
 	bool temp_team = false;
+	void* temp_unit;
 
 	static auto get_local_player() -> void; // -> Initializes the local player
 	static auto update_local_player(void* object, unsigned net_id, void*) -> bool; // -> Updates information about the local player
+	static auto update_forced_target() -> void;
 	static auto get_ai_base(float range)->std::vector<obj_ai_base_t>; // -> Returns every attackable object in range X
 	static auto get_ai_minions(float range)->std::vector<obj_ai_minion_t>; // -> Returns every minion in range X
 	static auto get_ai_heroes(float range, bool all_teams)->std::vector<obj_ai_hero_t>; // -> Returns every hero in range X

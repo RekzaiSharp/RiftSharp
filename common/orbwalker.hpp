@@ -16,7 +16,7 @@ public:
 	};
 
 	static auto on_attack(void*, void*, bool, bool, void*) -> void;
-	static auto can_atttack() -> bool;
+	static auto can_attack() -> bool;
 	static auto can_move() -> bool;
 	static auto move_to_mouse() -> void;
 	static auto orbwalk() -> void;
