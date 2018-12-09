@@ -3,6 +3,7 @@
 # Core Features:
 * Orbwalker
 * Target Selector
+* Prediction
 
 # Plugins:
 - Bad Manners
