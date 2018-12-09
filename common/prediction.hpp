@@ -53,10 +53,7 @@ public:
 
 	size_t target_path_count;
 
-	auto get_position_on_path(prediction_input_t pred_input) -> prediction_output_t;
-	auto get_path_length(PSDKVECTOR waypoints) -> float;
-	auto cut_path(PSDKVECTOR waypoints, float distance) -> std::vector<Vector>;
-	static auto get_standart_prediction(prediction_input_t pred_input) -> prediction_output_t;
+	auto get_line_prediction(float spell_range, float missile_speed, float cast_time) -> Vector;
 };
 
 extern std::unique_ptr<prediction_t> prediction;

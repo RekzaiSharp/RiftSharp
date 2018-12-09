@@ -3,6 +3,8 @@
 #include <string>
 #include <array>
 #include "../../common/menu.hpp"
+#include "../../libary/math/vector.hpp"
+#include "../../common/object_manager.hpp"
 
 bm_plugin_t::bm_plugin_t()
 {
@@ -88,7 +90,7 @@ auto bm_plugin_t::update_death_list() -> void
 		auto name = "";
 		global->context()._SdkGetAIName(object, &name);
 		Vector pos;
-		global->context()._SdkGetObjectPosition(object,(PSDKVECTOR)&pos);
+		global->context()._SdkGetObjectPosition(object,PSDKVECTOR(&pos));
 		dl_object.name = name;
 		if (object_manager->local_player.object_position.DistanceTo(pos) < 2000)
 		{

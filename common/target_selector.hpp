@@ -8,8 +8,7 @@ public:
 
 	enum target_mode_t
 	{
-		target_auto,
-		target_forced,
+		target_priority,
 		target_low_hp,
 		target_most_hp,
 		target_most_ad,

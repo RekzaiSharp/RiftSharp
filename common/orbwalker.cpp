@@ -83,13 +83,22 @@ auto orbwalker_t::orbwalk() -> void
 		target_selector->force_target();
 	}
 
-	if (target_selector->forced_active)
+	if (target_selector->forced_active) 
 	{
 		object_manager->update_forced_target();
+		target_selector->main_target = target_selector->forced_target;
 		if (orbwalker->orbwalker_mode_ == mode_combo && can_attack())
-			global->context()._SdkAttackTargetLocalPlayer(target_selector->forced_target.object, false);
+		{
+			auto pred = prediction->get_line_prediction(1150.f, 2000.f, 0.250f);
+			
+			global->context()._SdkCastSpellLocalPlayer(nullptr, PSDKVECTOR(&pred), 0, SPELL_CAST_START);
+			std::string temp = "prediction: {X: " + std::to_string(pred.x) + ", Y: " + std::to_string(pred.y) + ", Z:" + std::to_string(pred.z) + " }";
+			global->context()._SdkConsoleWrite(temp.c_str());
+			if (object_manager->local_player.object_position.DistanceTo(target_selector->forced_target.object_position) <= object_manager->local_player.attack_range)
+				global->context()._SdkAttackTargetLocalPlayer(target_selector->forced_target.object, false);
+		}
 	}
-
+	
 }
 
 std::unique_ptr<orbwalker_t> orbwalker = std::make_unique<orbwalker_t>();

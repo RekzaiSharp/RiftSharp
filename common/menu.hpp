@@ -21,10 +21,16 @@ public:
 	int ow_last_hit_key = 88;
 	float ow_extra_windup = 40.f;
 
+	//TargetSelector
+	bool ts_visible = true;
+	bool ts_active = true;
+	int ts_mode = 5;
+
 	static auto save_settings() -> void;
 	static auto load_settings() -> void;
 	static auto draw_menu() -> void;
 	static auto draw_overlay() -> void;
+
 };
 
 extern std::unique_ptr<menu_t> menu;

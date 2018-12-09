@@ -44,7 +44,8 @@ auto menu_t::load_settings() -> void
 auto menu_t::draw_menu() -> void
 {
 	global->context()._SdkUiText("[SharpOrbwalker] Loaded.");
-	global->context()._SdkUiText("[SharpBM] Loaded.");
+	global->context()._SdkUiText("[SharpTargetselector] Loaded.");
+	global->context()._SdkUiText("[SharpBadManners] Loaded.");
 
 	auto bm_col(true);
 	global->context()._SdkUiBeginWindow("SharpBM", &menu->bm_visible, &bm_col);
@@ -90,6 +91,16 @@ auto menu_t::draw_menu() -> void
 	global->context()._SdkUiEndWindow();
 
 
+	auto t_col(true);
+	global->context()._SdkUiBeginWindow("SharpTargetselector", &menu->ts_visible, &t_col);
+	if (menu->ts_visible && t_col)
+	{
+		global->context()._SdkUiText("Left click to force a target");
+		static const char* modes[] = { "Priority", "Low HP", "Most HP", "Most AD", "Most AP", "Closest", "Near Mouse", "Less Attack", "Less Cast", "Stacks" };
+		global->context()._SdkUiCombo("Mode", &menu->ts_mode, modes, RTL_NUMBER_OF(modes), nullptr);
+		
+	}
+	global->context()._SdkUiEndWindow();
 	save_settings();
 }
 

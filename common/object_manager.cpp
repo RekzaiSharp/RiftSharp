@@ -159,12 +159,9 @@ auto object_manager_t::get_ai_heroes(float range, bool all_teams) -> std::vector
 	object_manager->temp_range = range;
 	object_manager->temp_team = all_teams;
 	object_manager->vector_object_hero.clear();
-
 	global->context()._SdkEnumHeroes([](void* object, unsigned net_id, void*) -> bool
 	{
-		Vector position;
-		global->context()._SdkGetObjectPosition(object, PSDKVECTOR(&position));
-		if (object_manager->local_player.object_position.DistanceTo(position) > object_manager->temp_range)
+		if (object == object_manager->local_player.object)
 			return true;
 
 		auto team_id(0);
@@ -172,21 +169,25 @@ auto object_manager_t::get_ai_heroes(float range, bool all_teams) -> std::vector
 		if (team_id == object_manager->local_player.team_id)
 			return true;
 
+		Vector position;
+		global->context()._SdkGetObjectPosition(object, PSDKVECTOR(&position));
+		if (object_manager->local_player.object_position.DistanceTo(position) > object_manager->temp_range)
+			return true;
+
 		auto is_alive(false);
 		global->context()._SdkIsObjectDead(object, &is_alive);
-		if (!is_alive)
+		if (is_alive)
 			return true;
 
 		obj_ai_hero_t hero_object;
 		hero_object.object = object;
 		hero_object.net_id = net_id;
+		global->context()._SdkGetObjectBoundingRadius(object, &hero_object.bounding_radius);
 		hero_object.object_distance = object_manager->local_player.object_position.DistanceTo(position);
 		global->context()._SdkGetAIAttackRange(object, &hero_object.attack_range);
 		auto name = "";
 		global->context()._SdkGetAIName(object, &name);
 		hero_object.object_name = name;
-		global->context()._SdkConsoleWrite(name);
-	
 
 		object_manager->vector_object_hero.push_back(std::move(hero_object));
 

@@ -4,6 +4,7 @@
 #include <cmath>
 #include <float.h>
 #include "geometry.hpp"
+#include "../global.hpp"
 
 
 Vector::Vector()
@@ -207,6 +208,13 @@ Vector& Vector::Rotated(float angle)
 	this->y = y * c + x * s;
 
 	return *this;
+}
+
+SDKPOINT Vector::To2D(const Vector& v)
+{
+	SDKPOINT p;
+	global->context()._SdkWorldToScreen(PSDKVECTOR(&v), &p);
+	return p;
 }
 
 float Vector::LengthSqr() const

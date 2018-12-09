@@ -9,6 +9,12 @@
 auto target_selector_t::get_hero_target(target_mode_t mode, std::vector<object_manager_t::obj_ai_hero_t> hero_list) const -> object_manager_t::obj_ai_hero_t
 {
 	auto targets = hero_list;
+	object_manager_t::obj_ai_hero_t target;
+	target.is_valid = false;
+
+	if (hero_list.empty())
+		return target;
+
 	switch (mode)
 	{
 		ADD_MODE(target_low_hp, a.object_health.Current < b.object_health.Current);
@@ -18,6 +24,8 @@ auto target_selector_t::get_hero_target(target_mode_t mode, std::vector<object_m
 		ADD_MODE(target_most_ap, a.ability_power > b.ability_power);
 	default: break;
 	}
+
+	targets.front().is_valid = true;
 
 	return targets.front();
 }

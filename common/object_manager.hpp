@@ -22,6 +22,7 @@ public:
 		void* object;
 		unsigned net_id;
 		int ping;
+		bool is_valid;
 		float move_speed;
 		std::string object_name;
 		Vector object_position;

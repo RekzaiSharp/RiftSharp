@@ -2,28 +2,31 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="libary\global.cpp" />
-    <ClCompile Include="libary\math\vector.cpp" />
     <ClCompile Include="common\object_manager.cpp" />
     <ClCompile Include="common\orbwalker.cpp" />
     <ClCompile Include="common\target_selector.cpp" />
     <ClCompile Include="plugins\utility\bm_plugin.cpp" />
     <ClCompile Include="common\menu.cpp" />
-    <ClCompile Include="plugins\champion\karthus\karthus.cpp" />
     <ClCompile Include="common\prediction.cpp" />
     <ClCompile Include="libary\math\geometry.cpp" />
+    <ClCompile Include="libary\math\vector.cpp" />
+    <ClCompile Include="libary\global.cpp" />
+    <ClCompile Include="plugins\champion\champion.cpp" />
+    <ClCompile Include="plugins\champion\ezreal\ezreal.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="libary\sdkapi.hpp" />
-    <ClInclude Include="libary\global.hpp" />
-    <ClInclude Include="libary\math\vector.hpp" />
     <ClInclude Include="common\object_manager.hpp" />
     <ClInclude Include="common\orbwalker.hpp" />
     <ClInclude Include="common\target_selector.hpp" />
     <ClInclude Include="plugins\utility\bm_plugin.hpp" />
     <ClInclude Include="common\menu.hpp" />
-    <ClInclude Include="plugins\champion\karthus\karthus.hpp" />
     <ClInclude Include="common\prediction.hpp" />
     <ClInclude Include="libary\math\geometry.hpp" />
+    <ClInclude Include="libary\math\vector.hpp" />
+    <ClInclude Include="libary\global.hpp" />
+    <ClInclude Include="libary\sdkapi.hpp" />
+    <ClInclude Include="libary\fnv.hpp" />
+    <ClInclude Include="plugins\champion\champion.hpp" />
+    <ClInclude Include="plugins\champion\ezreal\ezreal.hpp" />
   </ItemGroup>
 </Project>
