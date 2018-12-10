@@ -65,17 +65,17 @@ auto orbwalker_t::orbwalk() -> void
 		std::make_pair(mode_combo, 32)
 	};
 
-	orbwalker->orbwalker_mode_ = mode_none;
+	orbwalker->orbwalker_mode = mode_none;
 	for (auto& entry : modes)
 	{
 		if (!(GetAsyncKeyState(entry.second) & 0x8000))
 			continue;
 
-		orbwalker->orbwalker_mode_ = entry.first;
+		orbwalker->orbwalker_mode = entry.first;
 		break;
 	}
 
-	if (orbwalker->orbwalker_mode_ != mode_none && orbwalker->can_move())
+	if (orbwalker->orbwalker_mode != mode_none && orbwalker->can_move())
 		orbwalker->move_to_mouse();
 
 	if (GetKeyState(VK_LBUTTON) & 0x80)
@@ -83,21 +83,29 @@ auto orbwalker_t::orbwalk() -> void
 		target_selector->force_target();
 	}
 
-	if (target_selector->forced_active) 
-	{
-		object_manager->update_forced_target();
-		target_selector->main_target = target_selector->forced_target;
-		if (orbwalker->orbwalker_mode_ == mode_combo && can_attack())
-		{
-			auto pred = prediction->get_line_prediction(1150.f, 2000.f, 0.250f);
-			
-			global->context()._SdkCastSpellLocalPlayer(nullptr, PSDKVECTOR(&pred), 0, SPELL_CAST_START);
-			std::string temp = "prediction: {X: " + std::to_string(pred.x) + ", Y: " + std::to_string(pred.y) + ", Z:" + std::to_string(pred.z) + " }";
-			global->context()._SdkConsoleWrite(temp.c_str());
-			if (object_manager->local_player.object_position.DistanceTo(target_selector->forced_target.object_position) <= object_manager->local_player.attack_range)
-				global->context()._SdkAttackTargetLocalPlayer(target_selector->forced_target.object, false);
-		}
-	}
+	//if (target_selector->forced_active) 
+	//{
+	//	object_manager->update_main_target();
+	//	target_selector->main_target = target_selector->forced_target;
+	//	if (orbwalker->orbwalker_mode == mode_combo && can_attack())
+	//	{
+	//		auto pred = prediction->get_line_prediction(1150.f, 2000.f, 0.250f);
+	//		global->context()._SdkCastSpellLocalPlayer(nullptr, PSDKVECTOR(&pred), 0, SPELL_CAST_START);
+	//		if (object_manager->local_player.object_position.DistanceTo(target_selector->forced_target.object_position) <= object_manager->local_player.attack_range)
+	//			global->context()._SdkAttackTargetLocalPlayer(target_selector->forced_target.object, false);
+	//	}
+	//}
+	//else if (!target_selector->forced_active && orbwalker->orbwalker_mode == orbwalker_t::mode_combo)
+	//{
+	//	const auto target = target_selector->get_hero_target(target_selector_t::target_low_hp, object_manager->get_ai_heroes(1150.f, false));
+	//	target_selector->main_target = target;
+	//	object_manager->update_main_target();
+	//	target_selector->forced_target = target_selector->main_target;
+	//	auto pred_pos = prediction->get_line_prediction(1150.f, 2000.f, 0.250f);
+	//	const auto col = prediction->will_collide(prediction_t::collision_minions, pred_pos, 60.f);
+	//	if (!col && target.is_valid)
+	//		global->context()._SdkCastSpellLocalPlayer(nullptr, PSDKVECTOR(&pred_pos), 0, SPELL_CAST_START);
+	//}
 	
 }
 

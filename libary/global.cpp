@@ -4,6 +4,7 @@
 #include "../plugins/champion/ezreal/ezreal.hpp"
 #include "../common/orbwalker.hpp"
 #include "fnv.hpp"
+#include "../plugins/champion/karthus/karthus.hpp"
 
 global_t::global_t(SDK_CONTEXT& context) : context_(context)
 {
@@ -13,6 +14,7 @@ global_t::global_t(SDK_CONTEXT& context) : context_(context)
 		global->context()._SdkRegisterOnObjectUpdate(object_manager->update_local_player, nullptr);
 
 		global->supported_champions_.emplace_back(std::make_unique<ezreal_t>());
+		global->supported_champions_.emplace_back(std::make_unique<karthus_t>());
 
 		global->context()._SdkRegisterOnAIAttack(orbwalker->on_attack, nullptr);
 		global->context()._SdkRegisterGameScene(RENDERSCENECALLBACK(on_tick), nullptr);
@@ -43,7 +45,6 @@ auto global_t::on_tick() -> void
 	auto champ = global->get_champion(fnv_rt(object_manager->local_player.object_name));
 	if (champ == nullptr)
 		return;
-
 
 	champ->on_tick();
 }

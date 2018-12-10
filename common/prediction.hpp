@@ -4,56 +4,20 @@
 class prediction_t
 {
 public:
-	enum hitchance_t
-	{
-		hitchance_low,
-		hitchance_medium,
-		hitchance_high,
-		hitchance_veryhigh,
-		hitchance_dashing,
-		hitchance_immobile
-	};
-
-	enum skillshot_type_t
-	{
-		skillshot_line,
-		skillshot_cone,
-		skillshot_circle
-	};
-
 	enum collisionable_objects_t
 	{
 		collision_minions,
 		collision_yasuowall
 	};
 
-	struct prediction_input_t
-	{
-		bool is_aoe = false;
-		bool collision = false;
-		std::vector<collisionable_objects_t> collision_objects = { collision_minions, collision_yasuowall };
-		float spell_delay;
-		float spell_radius;
-		float spell_range;
-		float spell_speed;
-		skillshot_type_t skillshot_type = skillshot_line;
-		bool use_bounding_radius = true;
-		Vector caster_pos;
-	};
-
-	struct prediction_output_t
-	{
-		std::vector<object_manager_t::obj_ai_hero_t> aoe_heroes_hit;
-		std::vector<object_manager_t::obj_ai_base_t> collision_objects;
-		hitchance_t hitchance;
-		prediction_input_t prediction_input;
-		Vector cast_position;
-		Vector unit_position;
-	};
-
 	size_t target_path_count;
+	Vector pred_pos;
+	float temp_radius;
+	bool is_colliding;
 
 	auto get_line_prediction(float spell_range, float missile_speed, float cast_time) -> Vector;
+	auto will_collide(collisionable_objects_t collision_type, Vector pred_pos, float spell_radius) -> bool;
+	auto point_on_line(Vector pt1, Vector pt2, Vector pt, double epsilon) -> bool;
 };
 
 extern std::unique_ptr<prediction_t> prediction;

@@ -41,16 +41,17 @@ auto object_manager_t::update_local_player(void* object, unsigned net_id, void*)
 	return true;
 }
 
-auto object_manager_t::update_forced_target() -> void
+auto object_manager_t::update_main_target() -> void
 {
 	global->context()._SdkEnumHeroes([](void* object, unsigned net_id, void*) -> bool
 	{
-		if (object != target_selector->forced_target.object)
+		if (object != target_selector->main_target.object)
 			return true;
 
-		global->context()._SdkGetObjectBoundingRadius(object, &target_selector->forced_target.bounding_radius);
-		global->context()._SdkGetObjectPosition(object, PSDKVECTOR(&target_selector->forced_target.object_position));
-		global->context()._SdkGetAIMovementSpeed(object, &target_selector->forced_target.move_speed);
+		global->context()._SdkGetObjectBoundingRadius(object, &target_selector->main_target.bounding_radius);
+		global->context()._SdkGetObjectPosition(object, PSDKVECTOR(&target_selector->main_target.object_position));
+		global->context()._SdkGetAIMovementSpeed(object, &target_selector->main_target.move_speed);
+		global->context()._SdkGetUnitHealth(object, &target_selector->main_target.object_health);
 
 		return true;
 	}, nullptr);

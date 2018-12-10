@@ -8,6 +8,7 @@ public:
 	virtual ~champion_t() {}
 
 	virtual auto on_tick() -> void;
+	virtual auto menu() -> void;
 	auto name() const -> uint32_t;
 
 protected:

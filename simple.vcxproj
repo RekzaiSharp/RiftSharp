@@ -96,6 +96,7 @@
     <ClCompile Include="plugins\champion\champion.cpp" />
     <ClCompile Include="plugins\champion\ezreal\ezreal.cpp" />
     <ClCompile Include="libary\math\geometry.cpp" />
+    <ClCompile Include="plugins\champion\karthus\karthus.cpp" />
     <ClCompile Include="plugins\utility\bm_plugin.cpp" />
     <ClCompile Include="libary\global.cpp" />
     <ClCompile Include="main.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="plugins\champion\champion.hpp" />
     <ClInclude Include="plugins\champion\ezreal\ezreal.hpp" />
     <ClInclude Include="libary\math\geometry.hpp" />
+    <ClInclude Include="plugins\champion\karthus\karthus.hpp" />
     <ClInclude Include="plugins\utility\bm_plugin.hpp" />
     <ClInclude Include="libary\global.hpp" />
     <ClInclude Include="libary\sdkapi.hpp" />

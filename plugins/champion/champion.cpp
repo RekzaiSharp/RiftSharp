@@ -6,8 +6,14 @@ champion_t::champion_t(uint32_t name) : name_(name) {}
 
 auto champion_t::on_tick() -> void
 {
-	global->context()._SdkConsoleWrite("default on tick");
+	
 }
+
+auto champion_t::menu() -> void
+{
+	global->context()._SdkConsoleWrite("[RiftSharp] Champion not supported");
+}
+
 
 auto champion_t::name() const -> uint32_t
 {

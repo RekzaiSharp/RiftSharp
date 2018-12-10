@@ -2,9 +2,6 @@
 
 #include <algorithm>
 #include <cmath>
-#include <float.h>
-#include "geometry.hpp"
-#include "../global.hpp"
 
 
 Vector::Vector()
@@ -175,48 +172,6 @@ float Vector::Length() const
 	return fast_sqrt(this->x*this->x + this->y*this->y + this->z*this->z);
 }
 
-float Vector::Polar() const
-{
-	if (geometry->close(this->x, 0, 0))
-	{
-		if (this->y > 0)
-		{
-			return 90.f;
-		}
-		return this->y < 0 ? 270.f : 0.f;
-	}
-
-	auto temp = atan(this->y / this->x);
-	auto theta = (temp * (180 / M_PI));
-	if (x < 0)
-	{
-		theta = theta + 180;
-	}
-	if(theta < 0)
-	{
-		theta = theta + 360;
-	}
-	return theta;
-}
-
-Vector& Vector::Rotated(float angle)
-{
-	auto c = cos(angle);
-	auto s = sin(angle);
-
-	this->x = x * c - y * s;
-	this->y = y * c + x * s;
-
-	return *this;
-}
-
-SDKPOINT Vector::To2D(const Vector& v)
-{
-	SDKPOINT p;
-	global->context()._SdkWorldToScreen(PSDKVECTOR(&v), &p);
-	return p;
-}
-
 float Vector::LengthSqr() const
 {
 	return float(std::pow(this->x, 2) + std::pow(this->y, 2) + std::pow(this->z, 2));
@@ -230,20 +185,6 @@ float Vector::DistanceTo(const Vector& other) const
 float Vector::Dot(const Vector& other) const
 {
 	return float(this->x * other.x + this->y * other.y + this->z * other.z);
-}
-
-float Vector::AngleBetween(const Vector& other) const
-{
-	auto theta = this->Polar() - other.Polar();
-	if (theta < 0)
-	{
-		theta = theta + 360;
-	}
-	if (theta > 180)
-	{
-		theta = 360 - theta;
-	}
-	return theta;
 }
 
 float Vector::NormalizeInPlace()

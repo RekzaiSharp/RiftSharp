@@ -21,8 +21,7 @@ public:
 	static auto move_to_mouse() -> void;
 	static auto orbwalk() -> void;
 
-private:
-	orbwalker_mode_t orbwalker_mode_ = mode_none;
+	orbwalker_mode_t orbwalker_mode = mode_none;
 };
 
 extern std::unique_ptr<orbwalker_t> orbwalker;

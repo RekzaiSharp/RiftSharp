@@ -1,6 +1,7 @@
 #include "menu.hpp"
 #include "orbwalker.hpp"
 #include "target_selector.hpp"
+#include "../libary/fnv.hpp"
 
 SDKCOLOR color_red = { 0, 0, 255, 255 };
 SDKVECTOR direction_vector = { 0, 0, 1.f };
@@ -101,7 +102,13 @@ auto menu_t::draw_menu() -> void
 		
 	}
 	global->context()._SdkUiEndWindow();
+
 	save_settings();
+
+	auto champ = global->get_champion(fnv_rt(object_manager->local_player.object_name));
+	if (champ == nullptr)
+		return;
+	champ->menu();
 }
 
 auto menu_t::draw_overlay() -> void

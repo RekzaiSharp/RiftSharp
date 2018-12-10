@@ -13,6 +13,7 @@
     <ClCompile Include="libary\global.cpp" />
     <ClCompile Include="plugins\champion\champion.cpp" />
     <ClCompile Include="plugins\champion\ezreal\ezreal.cpp" />
+    <ClCompile Include="plugins\champion\karthus\karthus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\object_manager.hpp" />
@@ -28,5 +29,6 @@
     <ClInclude Include="libary\fnv.hpp" />
     <ClInclude Include="plugins\champion\champion.hpp" />
     <ClInclude Include="plugins\champion\ezreal\ezreal.hpp" />
+    <ClInclude Include="plugins\champion\karthus\karthus.hpp" />
   </ItemGroup>
 </Project>
